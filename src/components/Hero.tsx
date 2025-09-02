@@ -1,5 +1,5 @@
 
-import TextType from './ui/TextType';
+import TextType from './TextType';
 
 
 const Hero = () => {
@@ -17,6 +17,8 @@ const Hero = () => {
         />
 
       </div>
+
+
     </main>
   )
 }
