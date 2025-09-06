@@ -93,10 +93,10 @@ const Hero: React.FC = () => {
   return (
     <main className="mt-6 flex flex-col pb-10 gap-8">
       {/* Typing Text */}
-      <div className="text-xl">
+      <div className="text-3xl">
         <TextType
           text={["A home for all stories", "Read, dream, enjoy", "Your Personal Story Canvas"]}
-          textColors={["#87CEEB", "#3EB489", "#008000"]}
+          textColors={["#4F46E5", "#F59E0B", "#10B981"]}
           typingSpeed={75}
           pauseDuration={1500}
           showCursor={true}
