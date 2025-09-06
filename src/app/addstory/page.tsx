@@ -20,6 +20,11 @@ const AddStoryPage: React.FC = () => {
   const [gradientColor1, setGradientColor1] = useState<string>("#F97316");
   const [gradientColor2, setGradientColor2] = useState<string>("#FF5733");
 
+  // Advanced Styling
+  const [textDecoration, setTextDecoration] = useState<string>("none"); // underline, line-through, highlight
+  const [textEffect, setTextEffect] = useState<string>("none"); // fade, glow, per-letter, shadow
+  const [exportData, setExportData] = useState<string>("");
+
   const router = useRouter();
 
   // Emoji insertion
@@ -42,6 +47,8 @@ const AddStoryPage: React.FC = () => {
       gradientDirection,
       gradientColor1,
       gradientColor2,
+      textDecoration,
+      textEffect,
     };
 
     const savedStories: typeof newStory[] = JSON.parse(localStorage.getItem("stories") || "[]");
@@ -50,6 +57,22 @@ const AddStoryPage: React.FC = () => {
 
     setStory("");
     router.push("/");
+  };
+
+  const handleExport = () => {
+    const settings = {
+      headline,
+      fontSize,
+      fontFamily,
+      fontWeight,
+      useGradient,
+      gradientDirection,
+      gradientColor1,
+      gradientColor2,
+      textDecoration,
+      textEffect,
+    };
+    setExportData(JSON.stringify(settings, null, 2));
   };
 
   return (
@@ -178,6 +201,38 @@ const AddStoryPage: React.FC = () => {
         )}
       </div>
 
+      {/* Advanced Styling */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block mb-2 font-medium">Word/Segment Styling</label>
+          <select
+            value={textDecoration}
+            onChange={(e) => setTextDecoration(e.target.value)}
+            className="w-full p-2 border rounded-lg dark:text-white dark:bg-gray-700 dark:border-gray-600"
+          >
+            <option value="none">None</option>
+            <option value="underline">Underline</option>
+            <option value="highlight">Highlight</option>
+            <option value="background">Background Block</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block mb-2 font-medium">Modern Effects</label>
+          <select
+            value={textEffect}
+            onChange={(e) => setTextEffect(e.target.value)}
+            className="w-full p-2 border rounded-lg dark:text-white dark:bg-gray-700 dark:border-gray-600"
+          >
+            <option value="none">None</option>
+            <option value="fade">Fade-in</option>
+            <option value="glow">Hover Glow</option>
+            <option value="per-letter">Per-letter Animation</option>
+            <option value="shadow">Text Shadow/Outline</option>
+          </select>
+        </div>
+      </div>
+
       {/* Story Input */}
       <div className="flex flex-col w-full gap-2">
         <Textarea
@@ -206,21 +261,56 @@ const AddStoryPage: React.FC = () => {
       {/* Live Preview */}
       <div className="p-4 sm:p-6 border rounded-xl bg-gray-50 dark:bg-gray-800">
         <h2
-          className="mb-4 text-xl sm:text-2xl"
+          className={`mb-4 text-xl sm:text-2xl ${
+            textEffect === "fade" ? "animate-fade-in" : ""
+          } ${textEffect === "glow" ? "hover:text-orange-500 hover:drop-shadow-lg transition" : ""}
+          ${textEffect === "shadow" ? "drop-shadow-[0_2px_2px_rgba(0,0,0,0.7)]" : ""}`}
           style={{
             fontSize,
             fontFamily,
             fontWeight,
-            background: useGradient
-              ? `linear-gradient(${gradientDirection}, ${gradientColor1}, ${gradientColor2})`
-              : "none",
-            WebkitBackgroundClip: useGradient ? "text" : "initial",
-            WebkitTextFillColor: useGradient ? "transparent" : "inherit",
+            textDecoration: textDecoration === "underline" ? "underline" : "none",
+            background:
+              textDecoration === "highlight"
+                ? "yellow"
+                : textDecoration === "background"
+                ? "#fef3c7"
+                : useGradient
+                ? `linear-gradient(${gradientDirection}, ${gradientColor1}, ${gradientColor2})`
+                : "none",
+            WebkitBackgroundClip:
+              useGradient || textDecoration === "highlight" || textDecoration === "background"
+                ? "text"
+                : "initial",
+            WebkitTextFillColor:
+              useGradient ? "transparent" : textDecoration === "highlight" ? "black" : "inherit",
           }}
         >
-          {headline}
+          {textEffect === "per-letter"
+            ? headline.split("").map((char, i) => (
+                <span
+                  key={i}
+                  className="inline-block animate-bounce"
+                  style={{ animationDelay: `${i * 0.05}s` }}
+                >
+                  {char}
+                </span>
+              ))
+            : headline}
         </h2>
         <p className="whitespace-pre-wrap">{story}</p>
+      </div>
+
+      {/* Export JSON */}
+      <div className="space-y-2">
+        <Button onClick={handleExport} className="bg-blue-500 hover:bg-blue-600">
+          Export Headline Settings
+        </Button>
+        {exportData && (
+          <pre className="p-4 bg-gray-100 dark:bg-gray-900 rounded-lg text-sm overflow-x-auto">
+            {exportData}
+          </pre>
+        )}
       </div>
 
       <Button onClick={handleSave} className="mt-6 w-full sm:w-auto bg-orange-500 hover:bg-orange-600">
