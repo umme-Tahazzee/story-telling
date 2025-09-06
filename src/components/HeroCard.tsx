@@ -1,3 +1,5 @@
+import { MdDelete } from "react-icons/md";
+
 const HeroCards = () => {
   const stories = [
     {
@@ -13,18 +15,7 @@ const HeroCards = () => {
 
       She is Tahazzee: The Girl Who Wove Dreams into Reality.`,
     },
-    {
-      title: "🚀 The Coder of PCIU 🚀",
-      text: `Between lines of HTML, CSS, and React, Tahazzee found her second
-      language — code. Debugging late nights at PCIU, she learned that
-      patience is the true key to logic.
-
-      Her thesis on monkeypox wasn’t just research — it was proof that
-      technology can heal. Each project she built carried one message:
-      knowledge becomes powerful when shared.
-
-      To her, coding is not just a skill, but a bridge to tomorrow.`,
-    },
+   
     {
       title: "🌸 The Dreaming Scholar 🌸",
       text: `Beyond code and art, Tahazzee carries a fire — to be an Islamic
@@ -46,7 +37,7 @@ const HeroCards = () => {
           className="p-6 bg-white dark:bg-gray-800 shadow-md rounded-2xl border
                      border-gray-200 dark:border-gray-700 relative"
         >
-          <h3 className="text-2xl text-orange-500 font-bold text-gray-900 dark:text-white mb-3">
+          <h3 className="text-2xl  font-bold text-gray-900 dark:text-white mb-3">
             {story.title}
           </h3>
 
@@ -60,10 +51,10 @@ const HeroCards = () => {
 
           {/* Delete button */}
           <button
-            className="absolute top-3 right-3 px-3 py-1 bg-red-500 cursor-not-allowed
-                       hover:bg-red-600 text-white text-sm rounded-md shadow"
+            className="absolute top-3 right-3 px-3 py-1 text-red-500 cursor-not-allowed
+                        rounded-md shadow"
           >
-            Delete
+              <MdDelete className="size-6" />
           </button>
         </div>
       ))}

@@ -3,6 +3,7 @@ import React from 'react'
 import ThemeToggleButton from './ui/theme-toggle-button'
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { useRouter } from "next/navigation"; ;
+import { BiSolidBookAdd } from "react-icons/bi";
 
 
 
@@ -28,9 +29,9 @@ const Navbar = () => {
         <button 
         onClick={handleClick}
         className='flex gap-2 items-center 
-          cursor-pointer md:bg-orange-600 md:px-4 md:py-2 md:rounded-4xl'>
-          <IoIosAddCircleOutline className=" text-2xl " />
-          <span className='hidden md:block'>Add</span>
+          cursor-pointer md:bg-green-600 md:px-4 md:py-2 md:rounded-4xl'>
+          <BiSolidBookAdd className=" text-2xl " />
+          <span className='hidden md:block'> Story</span>
         </button>
 
         <div className="cursor-pointer">

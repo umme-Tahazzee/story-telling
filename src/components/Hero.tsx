@@ -3,6 +3,7 @@
 import TextType from "./TextType";
 import React, { useEffect, useState } from "react";
 import HeroCard from './HeroCard';
+import { MdDelete } from "react-icons/md";
 
 const Hero = () => {
   const [stories, setStories] = useState<any[]>([]);
@@ -19,7 +20,7 @@ const Hero = () => {
   };
 
   return (
-    <main className="mt-6 flex flex-col  gap-6">
+    <main className="mt-6 flex flex-col pb-10  gap-6">
       {/* Typing Text */}
       <div className="text-xl">
         <TextType
@@ -77,10 +78,10 @@ const Hero = () => {
                 {/* Delete button */}
                 <button
                   onClick={() => handleDelete(index)}
-                  className="absolute top-3 right-3 px-3 py-1 bg-red-500
-                   hover:bg-red-600 text-white text-sm rounded-md shadow"
+                  className="absolute top-3 right-3 px-3 py-1 text-orange-700
+                    cursor-pointer "
                 >
-                  Delete
+                <MdDelete className="size-6" />
                 </button>
               </div>
             ))}

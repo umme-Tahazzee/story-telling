@@ -70,7 +70,7 @@ const AddStoryPage = () => {
           <select
             value={fontSize}
             onChange={(e) => setFontSize(e.target.value)}
-            className="w-full p-2 border rounded-lg"
+            className="w-full p-2 border rounded-lg "
           >
             <option value="20px">Small</option>
             <option value="24px">Medium</option>
@@ -84,7 +84,7 @@ const AddStoryPage = () => {
           <select
             value={fontFamily}
             onChange={(e) => setFontFamily(e.target.value)}
-            className="w-full p-2 border rounded-lg"
+            className="w-full p-2 border rounded-lg  dark:text-white"
           >
             <option value="serif">Serif</option>
             <option value="sans-serif">Sans-serif</option>
@@ -98,7 +98,7 @@ const AddStoryPage = () => {
           <select
             value={fontWeight}
             onChange={(e) => setFontWeight(e.target.value)}
-            className="w-full p-2 border rounded-lg"
+            className="w-full p-2 border rounded-lg  dark:text-white"
           >
             <option value="400">Normal</option>
             <option value="500">Medium</option>
