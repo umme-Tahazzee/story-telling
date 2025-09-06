@@ -4,7 +4,7 @@ import { useState } from "react";
 const HeroCards = () => {
   const stories = [
   {
-    title: "Tahazzee: The Girl Who Wove Dreams into Reality 🌟",
+    title: "Tahazzee: The Girl Who Wove Dreams into Reality",
     text: `In Chittagong lives a young woman named Umme Tahazzee, a girl with big dreams, quiet strength, and a curious mind. 
 By day, she studies computer science, building projects with patience and persistence. 
 By night, she becomes an artist, painting emotions on canvas and weaving stories with her imagination. 
@@ -37,9 +37,12 @@ Her story continues to unfold, with each day presenting new lessons and triumphs
         return (
           <div
             key={index}
-            className="p-6 sm:p-8 bg-white dark:bg-gray-800 shadow-xl rounded-3xl border border-gray-200 dark:border-gray-700 relative transition-transform hover:-translate-y-1 hover:shadow-2xl"
+            className="p-6 sm:p-8 bg-white dark:bg-gray-800 shadow-xl
+             rounded-3xl border border-gray-200 dark:border-gray-700
+              relative transition-transform hover:-translate-y-1 hover:shadow-2xl"
           >
-            <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-5">
+            <h3 className="text-2xl sm:text-xl font-bold text-gray-900
+             dark:text-white mb-5">
               {story.title}
             </h3>
 

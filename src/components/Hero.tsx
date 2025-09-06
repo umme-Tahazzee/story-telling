@@ -68,7 +68,7 @@ const Hero: React.FC = () => {
                 >
                   {/* Headline */}
                   <h3
-                    className="mb-5 text-2xl sm:text-3xl font-extrabold"
+                    className="mb-5 text-2xl sm:text-xl font-extrabold"
                     style={{
                       fontSize: story.fontSize,
                       fontFamily: story.fontFamily,

@@ -16,7 +16,7 @@ const Navbar = () => {
 
 
   return (
-    <nav className='bg-transparent mt-10 flex justify-between  '>
+    <nav className='bg-transparent mt-10 flex justify-between p-2  '>
       <div className="flex items-center justify-center gap-4 cursor-pointer">
         <h1 className=" text-bold text-4xl font-serif tracking-widest hover:text-gradient
           hover:text-gradient-to-r hover:from-orange-400 hover:via-orange-500 hover:to-red-500 
@@ -28,9 +28,9 @@ const Navbar = () => {
       <div className="flex items-center gap-4 font-sans ">
         <button 
         onClick={handleClick}
-        className='flex gap-2 items-center  text-white
+        className='flex gap-2 items-center text-green-600 md:text-white 
           cursor-pointer md:bg-green-600 md:px-4 md:py-2 md:rounded-4xl'>
-          <BiSolidBookAdd className=" text-2xl " />
+          <BiSolidBookAdd className=" text-2xl  md:block " />
           <span className='hidden md:block'> Story</span>
         </button>
 

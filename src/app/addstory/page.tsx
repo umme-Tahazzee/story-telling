@@ -44,39 +44,36 @@ const AddStoryPage: React.FC = () => {
       gradientColor2,
     };
 
-    // Get existing stories
     const savedStories: typeof newStory[] = JSON.parse(localStorage.getItem("stories") || "[]");
     savedStories.unshift(newStory);
-
-    // Save back
     localStorage.setItem("stories", JSON.stringify(savedStories));
 
     setStory("");
-    router.push("/"); // redirect back to home (Hero)
+    router.push("/");
   };
 
   return (
-    <main className="flex flex-col max-w-5xl mt-10 p-6 min-h-screen space-y-8">
-      <h1 className="text-3xl font-bold">📝 Write Your Story</h1>
+    <main className="flex flex-col max-w-5xl mx-auto mt-6 p-4 sm:p-6 min-h-screen space-y-8">
+      <h1 className="text-2xl sm:text-3xl font-bold text-center sm:text-left">📝 Write Your Story</h1>
 
       {/* Headline Editor */}
-      <div>
+      <div className="flex flex-col">
         <label className="block mb-2 font-medium">Headline</label>
         <input
           type="text"
           value={headline}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeadline(e.target.value)}
-          className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-orange-400"
+          onChange={(e) => setHeadline(e.target.value)}
+          className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-orange-400 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
         />
 
-        {/* Emoji Buttons for Headline */}
-        <div className="flex gap-2 mt-2">
+        {/* Emoji Buttons */}
+        <div className="flex flex-wrap gap-2 mt-2">
           {emojis.map((emoji) => (
             <button
               type="button"
               key={emoji}
               onClick={() => addEmoji(emoji, "headline")}
-              className="p-2 border rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="p-2 border rounded hover:bg-gray-100 dark:hover:bg-gray-600"
             >
               {emoji}
             </button>
@@ -85,13 +82,13 @@ const AddStoryPage: React.FC = () => {
       </div>
 
       {/* Typography Controls */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
           <label className="block mb-2 font-medium">Font Size</label>
           <select
             value={fontSize}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFontSize(e.target.value)}
-            className="w-full p-2 border rounded-lg"
+            onChange={(e) => setFontSize(e.target.value)}
+            className="w-full p-2 border rounded-lg dark:text-white dark:bg-gray-700 dark:border-gray-600"
           >
             <option value="20px">Small</option>
             <option value="24px">Medium</option>
@@ -104,8 +101,8 @@ const AddStoryPage: React.FC = () => {
           <label className="block mb-2 font-medium">Font Family</label>
           <select
             value={fontFamily}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFontFamily(e.target.value)}
-            className="w-full p-2 border rounded-lg dark:text-white"
+            onChange={(e) => setFontFamily(e.target.value)}
+            className="w-full p-2 border rounded-lg dark:text-white dark:bg-gray-700 dark:border-gray-600"
           >
             <option value="serif">Serif</option>
             <option value="sans-serif">Sans-serif</option>
@@ -118,8 +115,8 @@ const AddStoryPage: React.FC = () => {
           <label className="block mb-2 font-medium">Font Weight</label>
           <select
             value={fontWeight}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFontWeight(e.target.value)}
-            className="w-full p-2 border rounded-lg dark:text-white"
+            onChange={(e) => setFontWeight(e.target.value)}
+            className="w-full p-2 border rounded-lg dark:text-white dark:bg-gray-700 dark:border-gray-600"
           >
             <option value="400">Normal</option>
             <option value="500">Medium</option>
@@ -136,19 +133,20 @@ const AddStoryPage: React.FC = () => {
           <input
             type="checkbox"
             checked={useGradient}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUseGradient(e.target.checked)}
+            onChange={(e) => setUseGradient(e.target.checked)}
+            className="w-4 h-4"
           />
           <span className="font-medium">Use Gradient</span>
         </label>
 
         {useGradient && (
-          <div className="grid grid-cols-3 gap-4 items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
             <div>
               <label className="block mb-2 font-medium">Direction</label>
               <select
                 value={gradientDirection}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setGradientDirection(e.target.value)}
-                className="w-full p-2 border rounded-lg"
+                onChange={(e) => setGradientDirection(e.target.value)}
+                className="w-full p-2 border rounded-lg dark:text-white dark:bg-gray-700 dark:border-gray-600"
               >
                 <option value="to right">→ Right</option>
                 <option value="to left">← Left</option>
@@ -162,7 +160,7 @@ const AddStoryPage: React.FC = () => {
               <input
                 type="color"
                 value={gradientColor1}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setGradientColor1(e.target.value)}
+                onChange={(e) => setGradientColor1(e.target.value)}
                 className="w-full h-10 p-1 border rounded"
               />
             </div>
@@ -172,7 +170,7 @@ const AddStoryPage: React.FC = () => {
               <input
                 type="color"
                 value={gradientColor2}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setGradientColor2(e.target.value)}
+                onChange={(e) => setGradientColor2(e.target.value)}
                 className="w-full h-10 p-1 border rounded"
               />
             </div>
@@ -181,16 +179,15 @@ const AddStoryPage: React.FC = () => {
       </div>
 
       {/* Story Input */}
-      <div className="grid w-full gap-2">
+      <div className="flex flex-col w-full gap-2">
         <Textarea
           value={story}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setStory(e.target.value)}
+          onChange={(e) => setStory(e.target.value)}
           placeholder="Type your story here..."
           className="h-40"
         />
 
-        {/* Emoji Buttons for Story */}
-        <div className="flex gap-2 mt-2">
+        <div className="flex flex-wrap gap-2 mt-2">
           {emojis.map((emoji) => (
             <button
               type="button"
@@ -203,14 +200,13 @@ const AddStoryPage: React.FC = () => {
           ))}
         </div>
 
-        {/* Character Counter */}
         <p className="text-sm text-gray-500">{story.length} / 1000 characters</p>
       </div>
 
       {/* Live Preview */}
-      <div className="p-6 border rounded-xl bg-gray-50 dark:bg-gray-800">
+      <div className="p-4 sm:p-6 border rounded-xl bg-gray-50 dark:bg-gray-800">
         <h2
-          className="mb-4"
+          className="mb-4 text-xl sm:text-2xl"
           style={{
             fontSize,
             fontFamily,
@@ -227,8 +223,7 @@ const AddStoryPage: React.FC = () => {
         <p className="whitespace-pre-wrap">{story}</p>
       </div>
 
-      {/* Save Button */}
-      <Button onClick={handleSave} className="mt-6 bg-orange-500 hover:bg-orange-600">
+      <Button onClick={handleSave} className="mt-6 w-full sm:w-auto bg-orange-500 hover:bg-orange-600">
         Save Story
       </Button>
     </main>
