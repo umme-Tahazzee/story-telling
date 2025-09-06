@@ -3,6 +3,8 @@
 import { MdDelete } from "react-icons/md";
 import { FaHeart, FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { useState, useEffect } from "react";
+import { BiSolidHide } from "react-icons/bi";
+import { GoComment } from "react-icons/go";
 
 interface Story {
   title: string;
@@ -103,32 +105,33 @@ Her story continues to unfold, with each day presenting new lessons and triumphs
               <p>{story.text}</p>
             </div>
 
-            {/* See More / See Less button */}
-            <button
-              onClick={() => toggleExpand(index)}
-              className="mt-3 text-blue-500 dark:text-blue-400 font-semibold
-               hover:underline transition-all"
-            >
-              {isExpanded ? "See Less" : "See More"}
-            </button>
+            {/* Actions and Controls */}
+            <div className="mt-4 flex flex-wrap items-center gap-4">
+              {/* See More / See Less */}
+              <button
+                onClick={() => toggleExpand(index)}
+                className="text-blue-500 dark:text-blue-400 font-semibold hover:underline transition-all"
+              >
+                {isExpanded ? "See Less" : "See More"}
+              </button>
 
-            {/* Actions */}
-            <div className="mt-4 flex gap-4 items-center">
+              {/* Like */}
               <button onClick={() => toggleLike(index)} className="flex items-center gap-1 text-red-500">
                 <FaHeart className="w-5 h-5" /> {likes[index] || 0}
               </button>
+
+              {/* Bookmark */}
               <button onClick={() => toggleBookmark(index)} className="flex items-center gap-1 text-yellow-500">
                 {bookmarks[index] ? <FaBookmark className="w-5 h-5" /> : <FaRegBookmark className="w-5 h-5" />}
               </button>
-            </div>
 
-            {/* Comments Toggle Button */}
-            <div className="mt-3">
+              {/* Toggle Comments */}
               <button
                 onClick={() => toggleComments(index)}
                 className="text-blue-500 dark:text-blue-400 font-semibold hover:underline transition-all"
               >
-                {showComments[index] ? "Hide Comments" : "Show Comments"}
+       {showComments[index] ? <BiSolidHide className="size-6" />: <GoComment className="size-6"  />}
+                
               </button>
             </div>
 
@@ -160,6 +163,7 @@ Her story continues to unfold, with each day presenting new lessons and triumphs
                 </div>
               </div>
             )}
+
 
             {/* Delete button */}
             <button

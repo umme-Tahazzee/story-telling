@@ -28,7 +28,13 @@ const AddStoryPage: React.FC = () => {
   const router = useRouter();
 
   // Emoji insertion
-  const emojis: string[] = ["😊", "🔥", "✨", "💡", "❤️", "🎉", "🌸", "🚀"];
+  const emojis: string[] = [
+  "😊", "🔥", "✨", "💡", "❤️", "🎉", "🌸", "🚀",
+  "🌟", "😎", "🎶", "💫", "🌈", "🍀", "🌻", "💖",
+  "🎁", "🍎", "⚡", "🦋", "🎨", "🍕", "🏆", "📚",
+  "💎", "🌙", "🌺", "🎯", "🥳", "🍩", "🐾", "🪐"
+];
+
   const addEmoji = (emoji: string, target: "headline" | "story") => {
     if (target === "headline") setHeadline((prev) => prev + emoji);
     else setStory((prev) => prev + emoji);
