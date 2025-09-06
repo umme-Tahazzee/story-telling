@@ -130,7 +130,7 @@ Her story continues to unfold, with each day presenting new lessons and triumphs
                 onClick={() => toggleComments(index)}
                 className="text-blue-500 dark:text-blue-400 font-semibold hover:underline transition-all"
               >
-       {showComments[index] ? <BiSolidHide className="size-6" />: <GoComment className="size-6"  />}
+         {showComments[index] ? <BiSolidHide className="size-6" />: <GoComment className="size-6"  />}
                 
               </button>
             </div>
@@ -167,7 +167,7 @@ Her story continues to unfold, with each day presenting new lessons and triumphs
 
             {/* Delete button */}
             <button
-              className="absolute top-4 right-4 px-3 py-1 text-red-500 cursor-not-allowed rounded-full shadow-lg hover:shadow-xl transition-all"
+              className="hidden md:block absolute top-4 right-4 px-3 py-1 text-red-500 cursor-not-allowed rounded-full shadow-lg hover:shadow-xl transition-all"
             >
               <MdDelete className="w-6 h-6" />
             </button>
