@@ -90,7 +90,7 @@ Her story continues to unfold, with each day presenting new lessons and triumphs
         return (
           <div
             key={index}
-            className="p-6 sm:p-8 bg-white dark:bg-gray-800 shadow-xl rounded-3xl border
+            className="mt-10 p-6 sm:p-8 bg-white dark:bg-gray-800 shadow-xl rounded-3xl border
              border-gray-200 dark:border-gray-700 relative transition-transform hover:-translate-y-1 
              hover:shadow-2xl"
           >

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import HeroCard from './HeroCard';
 import { MdDelete } from "react-icons/md";
 import { FaHeart, FaBookmark, FaRegBookmark } from "react-icons/fa";
-import { MdOutlineModeComment } from "react-icons/md";
+import { BsEmojiGrin } from "react-icons/bs";
 import { BiSolidHide } from "react-icons/bi";
 import { GoComment } from "react-icons/go";
 
@@ -33,6 +33,8 @@ const Hero: React.FC = () => {
   const [stories, setStories] = useState<Story[]>([]);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [likes, setLikes] = useState<{ [key: number]: number }>({});
+  const [haha, setHaha] = useState<{ [key: number]: number }>({});
+
   const [bookmarks, setBookmarks] = useState<{ [key: number]: boolean }>({});
   const [comments, setComments] = useState<{ [key: number]: Comment[] }>({});
   const [newComments, setNewComments] = useState<{ [key: number]: string }>({});
@@ -73,6 +75,12 @@ const Hero: React.FC = () => {
     localStorage.setItem("likes", JSON.stringify(updated));
   };
 
+   const toggleHaha = (index: number) => {
+    const updated = { ...haha, [index]: (likes[index] || 0) + 1 };
+    setHaha(updated);
+    localStorage.setItem("Haha", JSON.stringify(updated));
+  };
+
   const toggleBookmark = (index: number) => {
     const updated = { ...bookmarks, [index]: !bookmarks[index] };
     setBookmarks(updated);
@@ -93,7 +101,7 @@ const Hero: React.FC = () => {
   return (
     <main className="mt-6 flex flex-col pb-10 gap-8">
       {/* Typing Text */}
-      <div className="text-3xl">
+      <div className="text-xl md:text-3xl">
         <TextType
           text={["A home for all stories", "Read, dream, enjoy", "Your Personal Story Canvas"]}
           textColors={["#4F46E5", "#F59E0B", "#10B981"]}
@@ -109,7 +117,7 @@ const Hero: React.FC = () => {
       <HeroCard />
 
       {/* Stories */}
-      <div className="w-full">
+      <div className="w-full ">
         {stories.length > 0 ? (
           <div className="space-y-8">
             {stories.map((story, index) => {
@@ -157,9 +165,17 @@ const Hero: React.FC = () => {
                       </button>
                     )}
 
-                    {/* Like */}
+                    {/* Heart */}
                     <button onClick={() => toggleLike(index)} className="flex items-center gap-1 text-red-500">
                       <FaHeart className="w-5 h-5" /> {likes[index] || 0}
+                    </button>
+                    
+                    {/* haha */}
+                    <button onClick={() => toggleHaha(index)} 
+                    className="flex items-center gap-1 text-yellow-500">
+                    <Frown className="h-7 w-7 " />{haha[index] || 0}
+                      
+                 
                     </button>
 
                     {/* Bookmark */}
