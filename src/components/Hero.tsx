@@ -60,6 +60,12 @@ const Hero: React.FC = () => {
     setComments(savedComments);
   }, []);
 
+  // Load from localStorage on mount
+  useEffect(() => {
+    const savedHaha = JSON.parse(localStorage.getItem("Haha") || "{}");
+    setHaha(savedHaha);
+  }, []);
+
   const handleDelete = (index: number) => {
     const updatedStories = stories.filter((_, i) => i !== index);
     setStories(updatedStories);
@@ -76,11 +82,15 @@ const Hero: React.FC = () => {
     localStorage.setItem("likes", JSON.stringify(updated));
   };
 
-   const toggleHaha = (index: number) => {
-    const updated = { ...haha, [index]: (likes[index] || 0) + 1 };
+
+
+  // Toggle Haha reaction
+  const toggleHaha = (index: number) => {
+    const updated = { ...haha, [index]: (haha[index] || 0) + 1 };
     setHaha(updated);
     localStorage.setItem("Haha", JSON.stringify(updated));
   };
+
 
   const toggleBookmark = (index: number) => {
     const updated = { ...bookmarks, [index]: !bookmarks[index] };
@@ -170,13 +180,13 @@ const Hero: React.FC = () => {
                     <button onClick={() => toggleLike(index)} className="flex items-center gap-1 text-red-500">
                       <FaHeart className="w-5 h-5" /> {likes[index] || 0}
                     </button>
-                    
+
                     {/* haha */}
-                    <button onClick={() => toggleHaha(index)} 
-                    className="flex items-center gap-1 text-yellow-800">
-                    <Frown className="h-6 w-6 " />{haha[index] || 0}
-                      
-                 
+                    <button
+                      onClick={() => toggleHaha(index)}
+                      className="flex items-center gap-1 text-yellow-600 hover:text-yellow-800 transition">
+                      <span className="text-2xl">😂</span> {/* Haha emoji */}
+                      {haha[index] || 0}
                     </button>
 
                     {/* Bookmark */}
@@ -189,7 +199,7 @@ const Hero: React.FC = () => {
                       onClick={() => toggleComments(index)}
                       className="text-blue-500 dark:text-blue-400 font-semibold hover:underline transition-all"
                     >
-                      {showComments[index] ? <BiSolidHide className="size-6" />: <GoComment className="size-6"  />}
+                      {showComments[index] ? <BiSolidHide className="size-6" /> : <GoComment className="size-6" />}
                     </button>
                   </div>
 
