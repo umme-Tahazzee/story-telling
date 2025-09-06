@@ -11,7 +11,7 @@ const Navbar = () => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push("/addstory"); // Navigate to addstory page
+    router.push("/addstory"); 
   };
 
 
@@ -28,7 +28,7 @@ const Navbar = () => {
       <div className="flex items-center gap-4 font-sans ">
         <button 
         onClick={handleClick}
-        className='flex gap-2 items-center 
+        className='flex gap-2 items-center  text-white
           cursor-pointer md:bg-green-600 md:px-4 md:py-2 md:rounded-4xl'>
           <BiSolidBookAdd className=" text-2xl " />
           <span className='hidden md:block'> Story</span>
