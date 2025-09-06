@@ -8,6 +8,7 @@ import { FaHeart, FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { BsEmojiGrin } from "react-icons/bs";
 import { BiSolidHide } from "react-icons/bi";
 import { GoComment } from "react-icons/go";
+import { Frown } from "lucide-react";
 
 // Define a type for each story
 interface Story {
@@ -172,8 +173,8 @@ const Hero: React.FC = () => {
                     
                     {/* haha */}
                     <button onClick={() => toggleHaha(index)} 
-                    className="flex items-center gap-1 text-yellow-500">
-                    <Frown className="h-7 w-7 " />{haha[index] || 0}
+                    className="flex items-center gap-1 text-yellow-800">
+                    <Frown className="h-6 w-6 " />{haha[index] || 0}
                       
                  
                     </button>
