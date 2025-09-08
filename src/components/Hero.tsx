@@ -4,12 +4,10 @@ import TextType from "./TextType";
 import React, { useEffect, useState } from "react";
 import HeroCard from './HeroCard';
 import { MdDelete } from "react-icons/md";
-import { FaHeart, FaBookmark, FaRegBookmark } from "react-icons/fa";
-import { BsEmojiGrin } from "react-icons/bs";
-import { BiSolidHide } from "react-icons/bi";
-import { GoComment } from "react-icons/go";
-import { Frown } from "lucide-react";
+
 import StoryActions from './StoryActions';
+import logo from '@/app/assests/storynest.png'
+import Image from "next/image";
 
 // Define a type for each story
 interface Story {
@@ -112,11 +110,12 @@ const Hero: React.FC = () => {
 
   return (
     <main className="mt-6 flex flex-col pb-10 gap-8">
+    
       {/* Typing Text */}
       <div className="text-xl md:text-3xl">
         <TextType
           text={["A home for all stories", "Read, dream, enjoy", "Your Personal Story Canvas"]}
-          textColors={["#4F46E5", "#F59E0B", "#10B981"]}
+          textColors={["#FFA500", "#87CEEB", "#10B981"]}
           typingSpeed={75}
           pauseDuration={1500}
           showCursor={true}
@@ -126,7 +125,11 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Hero Card */}
+     
       <HeroCard />
+         
+     
+
 
       {/* Stories */}
       <div className="w-full ">
@@ -202,7 +205,7 @@ const Hero: React.FC = () => {
           </div>
         ) : (
           <p className="text-gray-500 text-center animate-pulse">✨ 
-         Let the World Hear Your Voice..
+          Let the World Hear Your Voice..
           </p>
         )}
       </div>

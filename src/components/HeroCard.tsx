@@ -16,6 +16,21 @@ interface Comment {
   time: string;
 }
 
+const STORAGE_KEYS = {
+  likes: "heroCardLikes",
+  haha: "heroCardHaha",
+  sad: "heroCardSad",
+  bookmarks: "heroCardBookmarks",
+  comments: "heroCardComments",
+};
+
+// ✅ LocalStorage helper
+const getFromStorage = (key: string, fallback: any) =>
+  JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback));
+
+const setToStorage = (key: string, value: any) =>
+  localStorage.setItem(key, JSON.stringify(value));
+
 const HeroCards = () => {
   const stories: Story[] = [
     {
@@ -34,42 +49,49 @@ Her story continues to unfold, with each day presenting new lessons and triumphs
     },
   ];
 
+  // ✅ State
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [likes, setLikes] = useState<{ [key: number]: number }>({});
+  const [haha, setHaha] = useState<{ [key: number]: number }>({});
+  const [sad, setSad] = useState<{ [key: number]: number }>({});
   const [bookmarks, setBookmarks] = useState<{ [key: number]: boolean }>({});
   const [comments, setComments] = useState<{ [key: number]: Comment[] }>({});
   const [newComments, setNewComments] = useState<{ [key: number]: string }>({});
   const [showComments, setShowComments] = useState<{ [key: number]: boolean }>({});
 
+  // ✅ Load storage once
   useEffect(() => {
-    const savedLikes = JSON.parse(localStorage.getItem("heroCardLikes") || "{}");
-    const savedBookmarks = JSON.parse(localStorage.getItem("heroCardBookmarks") || "{}");
-    const savedComments = JSON.parse(localStorage.getItem("heroCardComments") || "{}");
-
-    setLikes(savedLikes);
-    setBookmarks(savedBookmarks);
-    setComments(savedComments);
+    setLikes(getFromStorage(STORAGE_KEYS.likes, {}));
+    setHaha(getFromStorage(STORAGE_KEYS.haha, {}));
+    setSad(getFromStorage(STORAGE_KEYS.sad, {}));
+    setBookmarks(getFromStorage(STORAGE_KEYS.bookmarks, {}));
+    setComments(getFromStorage(STORAGE_KEYS.comments, {}));
   }, []);
 
-  const toggleExpand = (index: number) => {
-    setExpandedIndex(expandedIndex === index ? null : index);
+  // ✅ Generic reaction handler
+  const handleReaction = (
+    index: number,
+    state: { [key: number]: number },
+    setState: React.Dispatch<React.SetStateAction<{ [key: number]: number }>>,
+    key: string
+  ) => {
+    const updated = { ...state, [index]: (state[index] || 0) + 1 };
+    setState(updated);
+    setToStorage(key, updated);
   };
 
-  const toggleLike = (index: number) => {
-    const updated = { ...likes, [index]: (likes[index] || 0) + 1 };
-    setLikes(updated);
-    localStorage.setItem("heroCardLikes", JSON.stringify(updated));
-  };
+  // ✅ Other handlers
+  const toggleExpand = (index: number) =>
+    setExpandedIndex(expandedIndex === index ? null : index);
 
   const toggleBookmark = (index: number) => {
     const updated = { ...bookmarks, [index]: !bookmarks[index] };
     setBookmarks(updated);
-    localStorage.setItem("heroCardBookmarks", JSON.stringify(updated));
+    setToStorage(STORAGE_KEYS.bookmarks, updated);
   };
 
-  const toggleComments = (index: number) => {
+  const toggleComments = (index: number) =>
     setShowComments({ ...showComments, [index]: !showComments[index] });
-  };
 
   const handleAddComment = (index: number) => {
     if (!newComments[index]) return;
@@ -79,7 +101,7 @@ Her story continues to unfold, with each day presenting new lessons and triumphs
     };
     setComments(updated);
     setNewComments({ ...newComments, [index]: "" });
-    localStorage.setItem("heroCardComments", JSON.stringify(updated));
+    setToStorage(STORAGE_KEYS.comments, updated);
   };
 
   return (
@@ -90,52 +112,53 @@ Her story continues to unfold, with each day presenting new lessons and triumphs
         return (
           <div
             key={index}
-            className="mt-10 p-6 sm:p-8 bg-white dark:bg-gray-800 shadow-xl rounded-3xl border
-             border-gray-200 dark:border-gray-700 relative transition-transform hover:-translate-y-1 
-             hover:shadow-2xl"
+            className="mt-10 p-6 sm:p-8 bg-white dark:bg-gray-800 
+            shadow-xl rounded-3xl border border-gray-200 dark:border-gray-700 
+            relative transition-transform hover:-translate-y-1 hover:shadow-2xl"
           >
+            {/* Title */}
             <h3 className="text-2xl sm:text-xl font-bold text-gray-900 dark:text-white mb-5">
               {story.title}
             </h3>
 
+            {/* Story Text */}
             <div
-              className={`text-gray-800 dark:text-gray-100 whitespace-pre-wrap p-6 sm:p-8 bg-gray-50 dark:bg-gray-900 rounded-xl shadow-inner overflow-hidden leading-relaxed text-sm sm:text-base transition-all duration-500`}
+              className={`text-gray-800 dark:text-gray-100 whitespace-pre-wrap p-6 sm:p-8 
+                bg-gray-50 dark:bg-gray-900 rounded-xl shadow-inner overflow-hidden leading-relaxed 
+                text-sm sm:text-base transition-all duration-500`}
               style={{ maxHeight: isExpanded ? "1000px" : "220px" }}
             >
               <p>{story.text}</p>
             </div>
 
-            {/* Actions and Controls */}
+            {/* Actions */}
             <div className="mt-4 flex flex-wrap items-center gap-4">
-              {/* See More / See Less */}
-              <button
-                onClick={() => toggleExpand(index)}
-                className="text-blue-500 dark:text-blue-400 font-semibold hover:underline transition-all"
-              >
+              <button onClick={() => toggleExpand(index)} className="text-blue-500 dark:text-blue-400 font-semibold hover:underline">
                 {isExpanded ? "See Less" : "See More"}
               </button>
 
-              {/* Like */}
-              <button onClick={() => toggleLike(index)} className="flex items-center gap-1 text-red-500">
+              <button onClick={() => handleReaction(index, likes, setLikes, STORAGE_KEYS.likes)} className="flex items-center gap-1 text-red-500">
                 <FaHeart className="w-5 h-5" /> {likes[index] || 0}
               </button>
 
-              {/* Bookmark */}
+              <button onClick={() => handleReaction(index, haha, setHaha, STORAGE_KEYS.haha)} className="flex items-center gap-1 text-yellow-500">
+                😂 {haha[index] || 0}
+              </button>
+
+              <button onClick={() => handleReaction(index, sad, setSad, STORAGE_KEYS.sad)} className="flex items-center gap-1 text-yellow-500">
+                😢 {sad[index] || 0}
+              </button>
+
               <button onClick={() => toggleBookmark(index)} className="flex items-center gap-1 text-yellow-500">
                 {bookmarks[index] ? <FaBookmark className="w-5 h-5" /> : <FaRegBookmark className="w-5 h-5" />}
               </button>
 
-              {/* Toggle Comments */}
-              <button
-                onClick={() => toggleComments(index)}
-                className="text-blue-500 dark:text-blue-400 font-semibold hover:underline transition-all"
-              >
-         {showComments[index] ? <BiSolidHide className="size-6" />: <GoComment className="size-6"  />}
-                
+              <button onClick={() => toggleComments(index)} className="text-blue-500 dark:text-blue-400">
+                {showComments[index] ? <BiSolidHide className="size-6" /> : <GoComment className="size-6" />}
               </button>
             </div>
 
-            {/* Comments Section */}
+            {/* Comments */}
             {showComments[index] && (
               <div className="mt-3 space-y-3">
                 {(comments[index] || []).map((comment, i) => (
@@ -145,7 +168,6 @@ Her story continues to unfold, with each day presenting new lessons and triumphs
                   </div>
                 ))}
 
-                {/* Add comment */}
                 <div className="mt-2 flex gap-2">
                   <input
                     type="text"
@@ -164,11 +186,8 @@ Her story continues to unfold, with each day presenting new lessons and triumphs
               </div>
             )}
 
-
-            {/* Delete button */}
-            <button
-              className="hidden md:block absolute top-4 right-4 px-3 py-1 text-red-500 cursor-not-allowed rounded-full shadow-lg hover:shadow-xl transition-all"
-            >
+            {/* Delete Button (Disabled) */}
+            <button className="hidden md:block absolute top-4 right-4 px-3 py-1 text-red-500 cursor-not-allowed rounded-full shadow-lg">
               <MdDelete className="w-6 h-6" />
             </button>
           </div>
